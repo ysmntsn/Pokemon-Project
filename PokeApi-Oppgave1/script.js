@@ -49,3 +49,15 @@ const listPokemon = async () => {
         console.error('Hata:', error.message);
     }
 };
+
+const getPokemon = async (id) => {
+    try {
+        let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        let response = await fetch(url);
+        let data = await response.json();
+        createBoxPokemon(data); // id parametresi kullanılmıyor
+    
+    } catch (error) {
+        console.error('Hata:', error.message);
+    }
+};
