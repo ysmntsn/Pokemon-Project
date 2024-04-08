@@ -166,3 +166,22 @@ const createBoxPokemon = (pokemon)=>{
   
 };
 
+searchInput.addEventListener("input", function(event) {
+    const search = event.target.value.toLowerCase();
+    
+    const pokemonElements = document.querySelectorAll(".box-poke");
+    
+    pokemonElements.forEach(pokemonElement => {
+        const typeElement = pokemonElement.querySelector(".type-poke");
+        if (typeElement) { // Eğer .type-poke sınıfına sahip bir öğe varsa devam et
+            const pokemonType = typeElement.textContent.toLowerCase();
+          
+            if (pokemonType.includes(search)) {
+                pokemonElement.style.display = "block";
+            } else {
+                pokemonElement.style.display = "none";
+            }
+        }
+    });
+});
+
