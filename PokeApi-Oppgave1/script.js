@@ -13,6 +13,7 @@ const containerPokeSaved = document.querySelector(".container-saved-pokemon");
 
 
 
+
 const colors ={
     normal:"#F5F5F5",
     ice:"#e0f5ff",
@@ -40,6 +41,7 @@ const countPoke = 50;
 
 
 
+
 const listPokemon = async () => {
     try {
         for (let i = 1; i <= countPoke; i++){
@@ -50,15 +52,31 @@ const listPokemon = async () => {
     }
 };
 
+// const getPokemon = async (id) => {
+//     try {
+//         let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+//         let response = await fetch(url);
+//         let data = await response.json();
+//         createBoxPokemon(data); // id parametresi kullanılmıyor
+    
+//     } catch (error) {
+//         console.error('Hata:', error.message);
+//     }
+// };
 const getPokemon = async (id) => {
     try {
         let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
         let response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
         let data = await response.json();
         createBoxPokemon(data); // id parametresi kullanılmıyor
     
     } catch (error) {
-        console.error('Hata:', error.message);
+        console.error('Hata:', error.message, error); // Hata nesnesini de yazdır
     }
 };
 
@@ -119,7 +137,9 @@ function editPoke(id) {
 
 
 
-
+document.addEventListener('DOMContentLoaded', function () {
+    createBoxPokemon();
+});
 
 const createBoxPokemon = (pokemon)=>{
    
@@ -156,7 +176,10 @@ const createBoxPokemon = (pokemon)=>{
     <button class="btn-edit" onclick="editPoke(${id})">Redigere</button>
    </div>
     `;
+
+ 
     containerPoke.appendChild(pokemonElement);
+    console.log("Pokemon elementi oluşturuldu:", pokemonElement);
 
     
    
@@ -206,13 +229,19 @@ const savePokemon = (name, id, type,imageUrl) => {
     localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
 };
 
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     showSavedPokemons();
 });
 
-
 function showSavedPokemons() {
     const container = document.querySelector('.container-saved-pokemon');
+    if (!container) {
+        console.error('Hata: Container elementi bulunamadı!');
+        return;
+    }
     container.innerHTML = ''; // Önceki içeriği temizle
 
     const savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
@@ -221,32 +250,36 @@ function showSavedPokemons() {
         container.innerHTML = '<p>Kaydedilmiş Pokemon bulunmamaktadır.</p>';
         return;
     }
-    savedPokemons.forEach(pokemon => {
-        const card = document.createElement('div');
-        card.classList.add('pokemon-card');
 
-        const name = document.createElement('h3');
-        name.textContent = pokemon.name;
+    // Kaydedilen ilk 5 pokemonu ya da daha azını al
+    const savedPokemonsToShow = savedPokemons.slice(0, 5);
 
-        const id = document.createElement('p');
-        id.textContent = `ID: ${pokemon.id}`;
-
-        const type = document.createElement('p');
-        type.textContent = `Type: ${pokemon.type}`;
-
-        const img = document.createElement('img');
-    img.src = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.id}.png`;
-    img.alt = `${pokemon.name} image`;
-
-        
-        card.appendChild(img);
-        card.appendChild(name);
-        card.appendChild(id);
-        card.appendChild(type);
-
-        container.appendChild(card);
+    savedPokemonsToShow.forEach(pokemon => {
+        const pokemonElement = createPokemonElement(pokemon); // Kaydedilen pokemonlardan element oluştur
+        container.appendChild(pokemonElement);
     });
 }
+
+// Verilen bir pokemon verisinden element oluştur
+function createPokemonElement(pokemon) {
+    const pokemonElement = document.createElement('div');
+    pokemonElement.classList.add('box-pokes');
+
+    pokemonElement.innerHTML = `
+        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.id}.png" alt="${pokemon.name} image"/>
+        <h4 class="name-poke">${pokemon.name}</h4>
+        <p class="type-poke">Type: ${pokemon.type}</p>
+        <div class="poke-buttons">
+            <button class="btn-save" onclick="savePokemon('${pokemon.name}', ${pokemon.id}, '${pokemon.type}')">Lagre</button>
+            <button class="btn-delete" onclick="deletePokemon(${pokemon.id})">Slette</button>
+            <button class="btn-edit" onclick="editPoke(${pokemon.id})">Redigere</button>
+        </div>
+    `;
+
+    return pokemonElement;
+}
+
+
 listPokemon();
 
 //Butonlar icin filtreme yapilan yer
@@ -282,5 +315,14 @@ buttonsHeader.forEach(button => button.addEventListener("click", async (event) =
         console.error('There has been a problem with your fetch operation:', error);
     }
 }));
+// document.getElementById("update").addEventListener("click", async function() {
+//     containerPokeSaved.innerHTML = ""; // Mevcut kartları temizle
+
+//     try {
+//         showSavedPokemons(); // Kaydedilmiş Pokemon kartlarını yeniden göster
+//     } catch (error) {
+//         console.error('Hata:', error.message);
+//     }
+// });
 
 
