@@ -61,3 +61,20 @@ const getPokemon = async (id) => {
         console.error('Hata:', error.message);
     }
 };
+
+
+const deletePokemon = (id) => {
+    const pokemonCards = document.querySelectorAll(".box-poke");
+
+    
+    pokemonCards.forEach(card => {
+        if (card.getAttribute("data-id") === "00" + id.toString()) {
+    
+            card.remove(); // Kartı DOM'dan kaldır
+        }
+    });
+
+    let savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
+    savedPokemons = savedPokemons.filter(pokemon => pokemon.id !== parseInt(id));
+    localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
+};
