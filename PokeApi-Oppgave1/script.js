@@ -247,3 +247,40 @@ function showSavedPokemons() {
         container.appendChild(card);
     });
 }
+listPokemon();
+
+//Butonlar icin filtreme yapilan yer
+
+buttonsHeader.forEach(button => button.addEventListener("click", async (event) => {
+    const buttonType = event.currentTarget.id;
+    console.log(`Button clicked: ${buttonType}`); // Butona tıklanıldığında konsola mesaj yazdır
+
+    containerPoke.innerHTML = "";
+
+    try {
+           const response = await fetch(`https://pokeapi.co/api/v2/type/${buttonType}`);
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const pokemons = data.pokemon;
+
+        for (let i = 0; i < pokemons.length; i++) {
+            const pokemonUrl = pokemons[i].pokemon.url;
+            const pokemonResponse = await fetch(pokemonUrl);
+            if (!pokemonResponse.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const pokemonData = await pokemonResponse.json();
+            const pokemonTypes = pokemonData.types.map(type => type.type.name);
+            if (pokemonTypes.length === 1 && pokemonTypes.includes(buttonType)) {
+                createBoxPokemon(pokemonData);
+            }
+        }
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}));
+
+
