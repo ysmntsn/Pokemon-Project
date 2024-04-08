@@ -78,3 +78,91 @@ const deletePokemon = (id) => {
     savedPokemons = savedPokemons.filter(pokemon => pokemon.id !== parseInt(id));
     localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
 };
+
+function editPoke(id) {
+    console.log("fonksiyon cagrildi");
+    
+    // Kullanıcıdan yeni isim ve tür bilgilerini al
+    const newName = prompt("Lütfen yeni ismi giriniz:");
+    const newType = prompt("Lütfen yeni türü giriniz:");
+
+    // Kullanıcı yeni isim ve tür bilgilerini girdiyse devam et
+    if (newName !== null && newType !== null) {
+        // Kartı bul
+        const card = document.querySelector(".btn-edit");
+       
+
+        // Eğer kart varsa, isim ve tür bilgilerini güncelle
+        if (card) {
+            card.querySelector('.name-poke').textContent = newName;
+            card.querySelector('.type-poke').textContent = `Type: ${newType}`;
+
+            // localStorage'deki kartın bilgilerini güncelle
+            let savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
+            savedPokemons = savedPokemons.map(pokemon => {
+                if (pokemon.id === id) {
+                    pokemon.name = newName;
+                    pokemon.type = newType;
+                }
+                return pokemon;
+            });
+            localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
+
+            // Başarılı bir şekilde güncelleme mesajı göster
+            alert('Pokemon bilgileri başarıyla güncellendi!');
+        } else {
+            // Kart bulunamazsa hata mesajı göster
+            alert('Belirtilen Pokemon bulunamadı!');
+        }
+    }
+}
+
+
+
+
+
+const createBoxPokemon = (pokemon)=>{
+   
+
+
+       const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+       const id =pokemon.id.toString().padStart(3,"0");
+    //    const type = pokemon.types[0].type.name;
+    const pokemonTypes = pokemon.types.map(type => type.type.name); // Pokemon'un tüm türlerini al
+    const validTypes = pokemonTypes.filter(type => Object.keys(colors).includes(type)); // Geçerli türleri kontrol et
+    const type = validTypes.length > 0 ? validTypes[0] : "normal"; 
+       const color = colors[type];
+
+
+ 
+   const pokemonElement = document.createElement("div");
+   pokemonElement.classList.add("box-poke");
+   pokemonElement.style.backgroundColor = `${color}`;
+   pokemonElement.setAttribute("data-id", id);
+
+
+   pokemonElement.innerHTML=` 
+   <img 
+   src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" 
+   alt="${name} image"
+   />
+   
+   <h4 class="name-poke">${name}</h4>
+   <p class="type-poke">Type: ${type}</p>
+   <div class="poke-buttons">
+           
+   <button class="btn-save" onclick="savePokemon('${name}', ${id}, '${type}')">Lagre</button>
+   <button class="btn-delete" onclick="deletePokemon(${id})">Slette</button>
+    <button class="btn-edit" onclick="editPoke(${id})">Redigere</button>
+   </div>
+    `;
+    containerPoke.appendChild(pokemonElement);
+
+    
+   
+
+
+
+  
+};
+
