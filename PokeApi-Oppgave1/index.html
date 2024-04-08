@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <!--Font Awesome Cdn-->
+   
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="path/to/favicon.ico" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+
+    <title>Pokemon</title>
+    <nav class="container-bar">
+       
+        <ul class="container-list">
+            <li class="container-item"><button class="btn-header" id="se-alt">Se Alt</button></li> 
+            <li class="container-item"><button class="btn-header normal" id="normal">Normal</button></li>
+            <li class="container-item"><button class="btn-header fire" id="fire">Fire</button></li>
+            <li class="container-item"><button class="btn-header water" id="water">Water</button></li>
+            <li class="container-item"><button class="btn-header grass" id="grass">Grass</button></li>
+            <li class="container-item"><button class="btn-header electric" id="electric">Electric</button></li>
+            <li class="container-item"><button class="btn-header ice" id="ice">Ice</button></li>
+            <li class="container-item"><button class="btn-header fighting" id="fighting">Fighting</button></li>
+            <li class="container-item"><button class="btn-header poison" id="poison">Poison</button></li>
+            <li class="container-item"><button class="btn-header ground" id="ground">Ground</button></li>
+            <li class="container-item"><button class="btn-header flying" id="flying">Flying</button></li>
+            <li class="container-item"><button class="btn-header psychic" id="psychic">Psychic</button></li>
+            <li class="container-item"><button class="btn-header bug" id="bug">Bug</button></li>
+            <li class="container-item"><button class="btn-header rock" id="rock">Rock</button></li>
+            <li class="container-item"><button class="btn-header ghost" id="ghost">Ghost</button></li>
+            <li class="container-item"><button class="btn-header dark" id="dark">Dark</button></li>
+            <li class="container-item"><button class="btn-header dragon" id="dragon">Dragon</button></li>
+            <li class="container-item"><button class="btn-header steel" id="steel">Steel</button></li>
+            <li class="container-item"><button class="btn-header fairy" id="fairy">Fairy</button></li>
+        </ul>
+    </nav>
+    <div class="right-navbar">
+       
+   
+</head>
+<body>
+   
+   <h1>PokeApi</h1>
+   <form class="search">
+    <input type="text" name="input-poke" id="input-poke" />
+    <!-- <input type="text" name="searchInput" id="searchInput" /> -->
+
+    <!-- <button class="btn-search"><i class="fas fa-search"></i></button> -->
+    <button class="btn-search">Oppdater <i class="fas fa-search"></i></button>
+
+    
+   </form>
+
+   <div class="container-poke">
+    <div class="box-poke">
+        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image"/>
+        <h4 class="name-poke"></h4>
+        <p class="type-poke"></p>
+        <div class="poke-buttons">
+            <button class="btn-save">Lagre</button>
+            <button class="btn-delete">Slette</button>
+            <button class="btn-edit">Redigere</button>
+        </div>
+    </div>
+          <!-- <img 
+        src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" 
+        alt="${name} image"
+        />
+        
+        <h4 class="name-poke">${name}</h4>
+        <p class="type-poke">Type: ${type}</p>
+        <div class="poke-buttons">
+                
+        <button class="btn-save" onclick="savePokemon('${name}', ${id}, '${type}')">Lagre</button>
+        <button class="btn-delete" onclick="deletePokemon(${id})">Slette</button>
+         <button class="btn-edit" onclick="editPoke(${id})">Redigere</button>
+        </div> -->
+    </div>
+   </div>
+   
+</div>
+<div class="container-saved-pokemon">
+   
+</div>
+<button class="savedpokemon-link" onclick="goBack()">
+    <a href="index1.html">Lagre Pokemons</a>
+    <a href="index2.html"></a>
+</button>
+
+</div>
+
+
+   
+
+  
+
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
