@@ -185,3 +185,65 @@ searchInput.addEventListener("input", function(event) {
     });
 });
 
+const savePokemon = (name, id, type,imageUrl) => {
+    const savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
+    
+    // Eğer aynı Pokemon zaten kayıtlı ise, kullanıcıya bir uyarı göster
+    const isDuplicate = savedPokemons.some(pokemon => pokemon.id === id);
+    if (isDuplicate) {
+        alert("Bu Pokemon zaten kayıtlı!");
+        return;
+    }
+
+    // Eğer 5'ten fazla Pokemon kayıtlı ise, kullanıcıya bir uyarı göster
+    if (savedPokemons.length >= 5) {
+        alert("En fazla 5 Pokemon kaydedebilirsiniz!");
+        return;
+    }
+
+    const pokemon = { name, id, type ,imageUrl};
+    savedPokemons.push(pokemon);
+    localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    showSavedPokemons();
+});
+
+
+function showSavedPokemons() {
+    const container = document.querySelector('.container-saved-pokemon');
+    container.innerHTML = ''; // Önceki içeriği temizle
+
+    const savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
+
+    if (savedPokemons.length === 0) {
+        container.innerHTML = '<p>Kaydedilmiş Pokemon bulunmamaktadır.</p>';
+        return;
+    }
+    savedPokemons.forEach(pokemon => {
+        const card = document.createElement('div');
+        card.classList.add('pokemon-card');
+
+        const name = document.createElement('h3');
+        name.textContent = pokemon.name;
+
+        const id = document.createElement('p');
+        id.textContent = `ID: ${pokemon.id}`;
+
+        const type = document.createElement('p');
+        type.textContent = `Type: ${pokemon.type}`;
+
+        const img = document.createElement('img');
+    img.src = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.id}.png`;
+    img.alt = `${pokemon.name} image`;
+
+        
+        card.appendChild(img);
+        card.appendChild(name);
+        card.appendChild(id);
+        card.appendChild(type);
+
+        container.appendChild(card);
+    });
+}
