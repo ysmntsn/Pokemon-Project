@@ -49,3 +49,40 @@ async function displayRandomPokemon() {
     }
 
 }
+
+
+//Trinn:4 Create-delen
+
+function createPokemonComponent(pokemonData) {
+    const pokemonElement = document.createElement('div');
+    pokemonElement.classList.add('pokemon');
+
+    const pokemonName = document.createElement('h2');
+    pokemonName.textContent = pokemonData.name;
+    pokemonElement.appendChild(pokemonName);
+
+    const pokemonImage = document.createElement('img');
+    pokemonImage.src = pokemonData.sprites.front_default;
+    pokemonImage.alt = pokemonData.name;
+    pokemonElement.appendChild(pokemonImage);
+
+    const pokemonStats = document.createElement('ul');
+    pokemonData.stats.forEach(stat => {
+        const statItem = document.createElement('li');
+        statItem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
+        pokemonStats.appendChild(statItem);
+    });
+    pokemonElement.appendChild(pokemonStats);
+
+   
+    pokemonElement.dataset.hp = 100; // Varsayılan olarak 100 HP
+
+    // Sağlık çubuğunu oluşturalım ve Pokemon bileşenine ekleyelim
+    const healthBar = document.createElement('div');
+    healthBar.classList.add('health-bar');
+    healthBar.id = `healthBar-${pokemonData.name}`; // Her Pokemon için benzersiz bir id atayalım
+    healthBar.style.width = '100%'; // Başlangıçta sağlık çubuğunu tam olarak gösterelim
+    pokemonElement.appendChild(healthBar);
+
+    return pokemonElement;
+}
