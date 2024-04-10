@@ -86,3 +86,55 @@ function createPokemonComponent(pokemonData) {
 
     return pokemonElement;
 }
+
+
+//Trinn:5 updateeHealthBar function for å oppdatere helsesøyler
+
+
+const waitingPokemons = document.querySelectorAll('.waiting-pokemon');
+
+function updateHealthBar(pokemon, hp) {
+    const pokemonName = pokemon.querySelector('h2').textContent;
+    let healthBar = document.getElementById(`healthBar-${pokemonName}`);
+    
+    if (!healthBar) {
+        // Sağlık çubuğu bulunamazsa, yeni bir sağlık çubuğu oluştur
+        const healthBarContainer = document.createElement('div');
+        healthBarContainer.className = 'health-bar-container';
+        healthBar = document.createElement('div');
+        healthBar.id = `healthBar-${pokemonName}`;
+        healthBar.className = 'health-bar';
+        healthBarContainer.appendChild(healthBar);
+        pokemon.appendChild(healthBarContainer);
+    }
+
+    // Sağlık çubuğunu güncelle
+    healthBar.style.width = `${(hp / 100) * 100}%`;
+
+    
+
+
+// Eğer HP 0 veya daha az ise, Pokemon'u ekrandan kaldır ve kazananı kontrol et
+if (hp <= 0) {
+    console.log(`${pokemonName} Pokemon'u yenildi.`);
+  
+     // Pokemon'un HP'si 0 veya daha azsa, ekrandan kaldır
+     if (parseInt(pokemon.dataset.hp) <= 0) {
+        pokemon.remove();
+    }
+
+    // Eğer bu sonucu etkileyen Pokemon saldıran ise
+    if (pokemon === attacker) {
+        console.log(`${attacker.querySelector('h2').textContent} Pokemon'u oyunu kaybetti!`);
+        alert(`${attacker.querySelector('h2').textContent} Pokemon'u oyunu kaybetti!`);
+        // Oyunu kaybeden Pokemon artık saldırı veya savunma yapamaz, ekrandan kaldırılır
+        attacker = null;
+    } else {
+        console.log(`${defender.querySelector('h2').textContent} Pokemon'u oyunu kazandı! Tebrikler, kazandınız!`);
+        alert(`${defender.querySelector('h2').textContent} Pokemon'u ikinci oyuna hazır! Tebrikler, kazandınız!`);
+        // Oyunu kazanan Pokemon, ikinci oyuna hazır olduğunu belirtmek için bir bildirim göster
+        // defender = null; // Bu satırı yorum satırına alıyoruz
+    }
+}
+
+}
