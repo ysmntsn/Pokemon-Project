@@ -32,3 +32,20 @@ function generateRandomPokemonIds(count) {
     return randomIds;
 }
 
+
+
+//Trinn:3 Legger til Pokémon-komponenter i HTML
+
+async function displayRandomPokemon() {
+    const randomIds = generateRandomPokemonIds(3);
+    const pokemonContainer = document.getElementById('pokemonContainer');
+    pokemonContainer.innerHTML = ''; // Önceki Pokemonları temizle
+
+    for (const id of randomIds) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const pokemonData = await response.json();
+        const pokemonComponent = createPokemonComponent(pokemonData);
+        pokemonContainer.appendChild(pokemonComponent);
+    }
+
+}
