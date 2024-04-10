@@ -1,4 +1,3 @@
-
 //Variables//
 
 const searchInput = document.querySelector("#input-poke");
@@ -54,7 +53,7 @@ const listPokemon = async () => {
 
 // const getPokemon = async (id) => {
 //     try {
-//         let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+//         let url = https://pokeapi.co/api/v2/pokemon/${id};
 //         let response = await fetch(url);
 //         let data = await response.json();
 //         createBoxPokemon(data); // id parametresi kullanılmıyor
@@ -63,9 +62,10 @@ const listPokemon = async () => {
 //         console.error('Hata:', error.message);
 //     }
 // };
+
 const getPokemon = async (id) => {
     try {
-        let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        let url =`https://pokeapi.co/api/v2/pokemon/${id}`
         let response = await fetch(url);
         
         if (!response.ok) {
@@ -97,43 +97,7 @@ const deletePokemon = (id) => {
     localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
 };
 
-function editPoke(id) {
-    console.log("fonksiyon cagrildi");
-    
-    // Kullanıcıdan yeni isim ve tür bilgilerini al
-    const newName = prompt("Lütfen yeni ismi giriniz:");
-    const newType = prompt("Lütfen yeni türü giriniz:");
 
-    // Kullanıcı yeni isim ve tür bilgilerini girdiyse devam et
-    if (newName !== null && newType !== null) {
-        // Kartı bul
-        const card = document.querySelector(".btn-edit");
-       
-
-        // Eğer kart varsa, isim ve tür bilgilerini güncelle
-        if (card) {
-            card.querySelector('.name-poke').textContent = newName;
-            card.querySelector('.type-poke').textContent = `Type: ${newType}`;
-
-            // localStorage'deki kartın bilgilerini güncelle
-            let savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
-            savedPokemons = savedPokemons.map(pokemon => {
-                if (pokemon.id === id) {
-                    pokemon.name = newName;
-                    pokemon.type = newType;
-                }
-                return pokemon;
-            });
-            localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
-
-            // Başarılı bir şekilde güncelleme mesajı göster
-            alert('Pokemon bilgileri başarıyla güncellendi!');
-        } else {
-            // Kart bulunamazsa hata mesajı göster
-            alert('Belirtilen Pokemon bulunamadı!');
-        }
-    }
-}
 
 
 
@@ -146,7 +110,7 @@ const createBoxPokemon = (pokemon)=>{
 
 
        const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-       const id =pokemon.id.toString().padStart(3,"0");
+    const id = pokemon.id < 10 ? `00${pokemon.id}` : `0${pokemon.id}`;
     //    const type = pokemon.types[0].type.name;
     const pokemonTypes = pokemon.types.map(type => type.type.name); // Pokemon'un tüm türlerini al
     const validTypes = pokemonTypes.filter(type => Object.keys(colors).includes(type)); // Geçerli türleri kontrol et
@@ -169,8 +133,7 @@ const createBoxPokemon = (pokemon)=>{
    
    <h4 class="name-poke">${name}</h4>
    <p class="type-poke">Type: ${type}</p>
-   <div class="poke-buttons">
-           
+   <div class="poke-buttons">           
    <button class="btn-save" onclick="savePokemon('${name}', ${id}, '${type}')">Lagre</button>
    <button class="btn-delete" onclick="deletePokemon(${id})">Slette</button>
     <button class="btn-edit" onclick="editPoke(${id})">Redigere</button>
@@ -260,13 +223,16 @@ function showSavedPokemons() {
     });
 }
 
-// Verilen bir pokemon verisinden element oluştur
 function createPokemonElement(pokemon) {
+    const id = pokemon.id < 10 ? `00${pokemon.id}` : `0${pokemon.id}`;
     const pokemonElement = document.createElement('div');
     pokemonElement.classList.add('box-pokes');
-
+    pokemonElement.id = `pokemon${pokemon.id}`;
     pokemonElement.innerHTML = `
-        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.id}.png" alt="${pokemon.name} image"/>
+    <img 
+    src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" 
+    alt="${pokemon.name} image"
+    />
         <h4 class="name-poke">${pokemon.name}</h4>
         <p class="type-poke">Type: ${pokemon.type}</p>
         <div class="poke-buttons">
@@ -280,8 +246,8 @@ function createPokemonElement(pokemon) {
 }
 
 
-listPokemon();
 
+listPokemon();
 //Butonlar icin filtreme yapilan yer
 
 buttonsHeader.forEach(button => button.addEventListener("click", async (event) => {
@@ -325,4 +291,46 @@ buttonsHeader.forEach(button => button.addEventListener("click", async (event) =
 //     }
 // });
 
+function editPoke(id) {
+    console.log("fonksiyon çağrıldı", id);
+    
+    // Kullanıcıdan yeni isim ve tür bilgilerini al
+    const newName = prompt("Lütfen yeni ismi giriniz:");
+    const newType = prompt("Lütfen yeni türü giriniz:");
+
+    // Kullanıcı yeni isim ve tür bilgilerini girdiyse devam et
+    if (newName !== null && newType !== null) {
+        // Kartı benzersiz data-id kullanarak bul
+        
+//         const formattedId = id < 10 ? 00${id} : 0${id};
+// const card = document.querySelector([data-id="${formattedId}"]);
+// const card = document.querySelector([data-id="00${id}"]);
+const card = document.querySelector(`[data-id="${id.toString().padStart(3, "0")}"]`);
+
+
+        console.log("card", card);
+        if (card) {
+            // Kart bulunduysa, isim ve tür bilgilerini güncelle
+            card.querySelector('.name-poke').textContent = newName;
+            card.querySelector('.type-poke').textContent = `Type: ${newType}`;
+
+            // localStorage'deki kartın bilgilerini güncelle
+            let savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
+            savedPokemons = savedPokemons.map(pokemon => {
+                if (pokemon.id == id) {
+                    pokemon.name = newName;
+                    pokemon.type = newType;
+                }
+                return pokemon;
+            });
+            localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
+
+            // Başarılı bir şekilde güncelleme mesajı göster
+            alert('Pokemon bilgileri başarıyla güncellendi!');
+        } else {
+            // Kart bulunamazsa hata mesajı göster
+            alert('Belirtilen Pokemon bulunamadı!');
+        }
+    }
+}
 

@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #333;
+}
+
+#pokemonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pokemon {
+    margin: 0 10px 50px; /* Sağa ve sola 10px, alt kısmına 20px boşluk */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.pokemon img {
+    max-width: 100px;
+    max-height: 100px;
+}
+.pokemon h2 {
+    font-size: 18px; /* veya istediğiniz bir boyut */
+    color: #000; /* veya istediğiniz bir renk */
+}
+
+button {
+    margin-top: 20px;
+    margin-bottom: 20px; /* Yukarıdaki ve alttaki boşluk 20px */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+.pokemon-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pokemon {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+}
+
+.health-bar {
+    height: 20px;
+    background-color: green;
+    margin-top: 5px;
+}
+
+.dead {
+    background-color: red;
+}
+
+.attacker {
+    border: 2px solid blue;
+}
+
+.defender {
+    border: 2px solid red;
+}
