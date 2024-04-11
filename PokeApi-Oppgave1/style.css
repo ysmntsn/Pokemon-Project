@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"); 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+
 :root {
     --clr-black: #1c1c1c;
     --clr-gray: #ececec;
@@ -24,19 +25,17 @@
     --type-fairy: #F0B6BC;
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color:var(--clr-black);
-    font-size: "Poppins" ;
+    color: var(--clr-black);
+    font-family: "Poppins", sans-serif;
 }
 
-
-body{
-    width:"100vw" ;
-    font-family:"Poppins",sans-serif ;
-    background-image: linear-gradient(80deg,#5651e5,#880868);
+body {
+    width: 100vw;
+    background-image: linear-gradient(80deg, #5651e5, #880868);
     min-height: 100vh;
     flex-direction: column;
     display: flex;
@@ -44,13 +43,11 @@ body{
     overflow-x: hidden;
     padding: 2rem;
     margin: 0 auto;
-    
-
 }
-header{
-    padding-block: 1rem;
-    box-shadow: 0 0 2rem -1rem rgba(0 , 0, 0, .5);
 
+header {
+    padding-block: 1rem;
+    box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, 0.5);
 }
 
 .savedpokemon-link {
@@ -70,10 +67,11 @@ header{
     text-decoration: none;
     color: #fff;
 }
+
 .createpokemon-link {
     position: fixed;
     top: 240px;
-    left: 20px; /* Button'un soldaki konumu */
+    left: 20px;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -87,123 +85,105 @@ header{
     text-decoration: none;
     color: #fff;
 }
-    
 
-
-
-.container-bar{
+.container-bar {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    align-items: flex-start; 
+    align-items: flex-start;
     padding-inline: 2rem;
-
-
 }
-.container-list{
+
+.container-list {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: .5rem ;
-
+    gap: 0.5rem;
 }
-.btn-header{
 
+.btn-header {
     background-color: var(--clr-gray);
     font-weight: 600;
-    padding: .6rem;
+    padding: 0.6rem;
     border-radius: 100vmax;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 0 0 2rem rgba(0, 0, 0, .25);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.25);
 }
-.btn-header:hover{
+
+.btn-header:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 2rem rgba(0, 0, 0, .25);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.25);
 }
-
-
-
-
-
-
-
-
 
 ul {
     list-style-type: none;
 }
-h1{
+
+h1 {
     font-size: 3rem;
     color: #fff;
 }
-form{
+
+form {
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
     margin: 3rem 0;
-
 }
+
 button {
     background-color: transparent;
     border: 0;
     border-radius: 0;
 }
 
-input,button{
+input,
+button {
     background-color: #fff;
     border: none;
     padding: 10px 20px;
     font-size: 1.4rem;
-
 }
 
-input{
+input {
     font-weight: bold;
-
 }
 
-input:focus{
-    
+input:focus {
     outline: none;
 }
+
 button {
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.container-poke{
+.container-poke {
     display: flex;
     width: 100%;
     padding: 2rem;
     flex-wrap: wrap;
     justify-content: center;
-    
-
-
 }
-.box-poke{
+
+.box-poke {
     width: 250px;
     background-color: #fff;
     border-radius: 20px;
     padding: 5px;
     margin: 10px;
-  
-
 }
-.box-poke img{
-    width: 90%; 
+
+.box-poke img {
+    width: 90%;
     filter: drop-shadow(5px 5px 5px #222);
     margin: 10px 0;
     object-fit: cover;
-
 }
-.box-poke h4{
-    font-size:1.4 rem ;
-    margin: 5px auto;
 
-}
-.box-poke{
+.box-poke h4 {
+    font-size: 1.4rem;
     margin: 5px auto;
 }
 
@@ -211,7 +191,7 @@ button {
 .btn-save,
 .btn-delete,
 .btn-edit {
-    background-color: #675ee4; 
+    background-color: #675ee4;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -223,20 +203,21 @@ button {
 
 /* Slette button */
 .btn-delete {
-    background-color: #b02091; /* Kırmızı */
+    background-color: #b02091;
 }
 
 /* Redigere button */
 .btn-edit {
-    background-color: #1fd4c8; /* Mavi */
+    background-color: #1fd4c8;
 }
 
 /* Hover effect */
 .btn-save:hover,
 .btn-delete:hover,
 .btn-edit:hover {
-    background-color: #45a049; /* Yeşil */
+    background-color: #45a049;
 }
+
 /* Styrer de valgte knappefargene */
 .normal {
     background-color: var(--type-normal);
@@ -328,18 +309,15 @@ button {
     color: var(--clr-black);
 }
 
-/* //index1.html icin css kodlari */
-.container-saved-pokemon{
+.container-saved-pokemon {
     display: flex;
     width: 100%;
     padding: 2rem;
     flex-wrap: wrap;
     justify-content: space-around;
-    
-
-
 }
-.box-pokes{
+
+.box-pokes {
     width: 200px;
     background-color: #fff;
     border-radius: 20px;
@@ -349,8 +327,6 @@ button {
     text-align: center;
     flex-direction: column;
     align-items: center;
-  
-
 }
 
 .box-pokes img {
@@ -368,8 +344,6 @@ button {
 .type-poke {
     margin-bottom: 15px;
 }
-/* 3. sayfanin Css leri */
-
 
 #pokemonForm {
     margin: 20px;
@@ -382,26 +356,26 @@ button {
 .form-group {
     display: flex;
     flex-direction: row;
-    margin-bottom: 10px; /* Her label/input çifti arasında biraz boşluk bırakır */
+    margin-bottom: 10px;
 }
 
 .label-group {
     flex: 1;
-    padding-right: 10px; /* Label ile input arasında bir boşluk bırakır */
+    padding-right: 10px;
 }
 
 .input-group {
-    flex: 3; /* Label'den daha geniş bir input alanı sağlar */
+    flex: 3;
 }
 
 .pokemoncreate-button {
     margin: 10px;
     padding: 10px;
-    float: right; /* Sağa yaslar */
-    color:#fff;
+    float: right;
+    color: #fff;
     background-color: #007bff;
 }
-/* 3. sayfadaki kart stilleri */
+
 .pokemon-card {
     width: 200px;
     background-color: var(--clr-white);
@@ -416,13 +390,12 @@ button {
 }
 
 .pokemon-card img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 200px;
+    height: 200px;
     filter: drop-shadow(5px 5px 5px #222);
     margin: 10px 0;
     object-fit: cover;
 }
-
 
 .pokemon-card h3 {
     margin-bottom: 5px;
@@ -430,33 +403,4 @@ button {
 
 .pokemon-card p {
     margin-bottom: 15px;
-}
-
-.search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-#input-poke {
-    padding: 10px;
-    border-radius: 5px 0 0 5px;
-    border: 1px solid #ccc;
-    width: 200px;
-}
-
-.btn-search {
-    background-color: #007bff;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-}
-.pokemon-card img {
-    width: 100px; /* Resmin genişliği */
-    height: auto; /* Resmin yüksekliği otomatik olarak ayarlanacak */
-    display: block; /* Resmi blok düzende göster */
-    margin: 0 auto; /* Resmi ortalamak için yatay margin */
 }
