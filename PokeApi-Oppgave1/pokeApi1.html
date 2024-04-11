@@ -48,44 +48,37 @@
     </header>
     <div class="right-navbar">
         <h1>PokeApi</h1>
-        <form class="search">
+        <form class="search" id="searchForm">
             <input type="text" name="input-poke" id="input-poke" />
-            <button class="btn-search">Oppdater <i class="fas fa-search"></i></button>
+            <button class="btn-search">Reset Pokemon<i class="fas fa-search"></i></button>
+         
         </form>
 
         <div class="container-poke">
-            <div class="box-poke">
-                <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image"/>
+            <!-- <div class="box-poke">
+                 <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image"/>
                 <h4 class="name-poke"></h4>
                 <p class="type-poke"></p>
 
                 <div class="poke-buttons">
-        <h2></h2>
-                    <button class="btn-save">Lagre</button>
+      
+                      <button class="btn-save">Lagre</button>
                     <button class="btn-delete">Slette</button>
                     <button class="btn-edit">Redigere</button>
-                </div>
-            </div>
+                </div> -->
+             
             <!-- PokeBoxlar buraya eklenecek -->
         </div>
 
-        <!-- <div class="container-saved-pokemon"> -->
-            <!-- <div class="box-poke">
-                <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image"/>
-                <h4 class="name-poke"></h4>
-                <p class="type-poke"></p>
-                <div class="poke-buttons">
-                    <button class="btn-save">Lagre</button>
-                    <button class="btn-delete">Slette</button>
-                    <button class="btn-edit">Redigere</button>
-                </div>
-            </div> -->
-            <!-- Kaydedilen Pokemonlar buraya eklenecek -->
+      
         </div>
+        <button class="createpokemon-link" onclick="goback()">
+          <a href="pokeApi3.html">Lage Pokemon</a>
         
+        </button>
         <button class="savedpokemon-link" onclick="goBack()">
             <a href="pokeApi2.html">Lagre Pokemons</a>
-            <a href="pokeApi3.html"></a>
+           <a href="pokeApi3.html"></a>
         </button>
     </div>
 
