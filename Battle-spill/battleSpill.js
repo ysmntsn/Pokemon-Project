@@ -141,7 +141,7 @@ if (hp <= 0) {
 
 
 
-//Trinn:5 startBattle
+//Trinn:6 startBattle
 
 
 let pokemons = [];
@@ -194,7 +194,7 @@ pokemons.forEach(pokemon => {
     }
     
 
-    //Trinn:5 attack-funksjonen
+    //Trinn:7 attack-funksjonen
 
     async function attack() {
         const attackPower = Math.floor(Math.random() * 50) + 1; // Saldırı gücü (1 ile 50 arasında rastgele)
@@ -255,5 +255,68 @@ pokemons.forEach(pokemon => {
     }
     
     
-    let gameEnded=false;// Oyunun bitip bitmediğini belirten bir durum değişkeni
     
+    
+
+    //Trinn:8 checkGameStatus-funksjonen
+
+let gameEnded=false;// Oyunun bitip bitmediğini belirten bir durum değişkeni
+
+function checkGameStatus() {
+    if (gameEnded) return; // Oyun zaten sona erdiyse fonksiyonu sonlandır
+
+
+    const remainingPokemons = document.querySelectorAll('.pokemon');
+    const remainingPokemonsArray = Array.from(remainingPokemons);
+    
+    let activePlayers = remainingPokemonsArray.filter(pokemon => !pokemon.classList.contains('waiting-pokemon'));
+
+    // Sadece saldıran ve savunan oyuncuların HP'sini kontrol et
+    let attackerHP = parseInt(attacker.dataset.hp);
+    let defenderHP = parseInt(defender.dataset.hp);
+
+    // Her iki oyuncunun HP'si de 0 ise, oyunu kaybeden oyuncuyu belirle ve ekrandan kaldır
+    if (attackerHP <= 0 && defenderHP <= 0) {
+        let loser = null;
+        if (attackerHP <= 0) {
+            loser = attacker;
+        } else {
+            loser = defender;
+        }
+        loser.dataset.hp = 0; // Oyunu kaybeden Pokemon'un HP'sini 0 olarak güncelle
+        updateHealthBar(loser, 0); // Sağlık çubuğunu güncelle (HP 0 olduğu için)
+        loser.remove(); // Oyunu kaybeden Pokemon'u ekrandan kaldır
+        gameEnded = true; // Oyunun bittiğini belirt
+        return;
+    }
+
+   // Oyunda sadece bir Pokemon kaldıysa ve bekleyen bir oyuncu değilse, kazanan ilan edilir ve ikinci aşamaya geçilir
+if (activePlayers.length === 1) {
+    const winner = activePlayers[0];
+    winner.dataset.hp = 100; // Kazanan Pokemon'un HP'sini yeniden doldurmaya gerek yok
+    alert(`Tebrikler! ${winner.querySelector('h2').textContent}, 1. oyunu kazandınız. 2. oyuna devam edebilirsiniz.`);
+    startSecondStage();
+    gameEnded = true; // Oyunun bittiğini belirt
+}
+
+}
+function startSecondStage() {
+    gameEnded = false; // İkinci aşama başladığında gameEnded'i sıfırla
+    // İkinci aşamanın başka işlemleri...
+    alert("İkinci aşama başladı! 2. oyuna hazır mısınız?");
+}
+
+
+
+window.onload = function() {
+    displayRandomPokemon();
+}
+
+
+   
+    document.getElementById('startGameButton').addEventListener('click', function() {
+        alert("Oyun başladı! Saldırı için bir Pokemon seçin.");
+        startBattle();
+    });
+
+
