@@ -193,3 +193,67 @@ pokemons.forEach(pokemon => {
     
     }
     
+
+    //Trinn:5 attack-funksjonen
+
+    async function attack() {
+        const attackPower = Math.floor(Math.random() * 50) + 1; // Saldırı gücü (1 ile 50 arasında rastgele)
+    
+        // Saldıran ve savunan Pokemon'ların HP değerlerini güncelle
+        let attackerHP = parseInt(attacker.dataset.hp); // Saldıran Pokemon'un mevcut HP değeri
+        let defenderHP = parseInt(defender.dataset.hp); // Savunan Pokemon'un mevcut HP değeri
+    
+        if (attackerHP <= 0) {
+            alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
+            return;
+        } 
+    
+        const newAttackerHP = Math.max(0, attackerHP - attackPower); // Saldıran Pokemon'un yeni HP değeri
+        const newDefenderHP = Math.max(0, defenderHP - attackPower); // Savunan Pokemon'un yeni HP değeri
+    
+        // HP değerlerini güncelle
+        attacker.dataset.hp = newAttackerHP;
+        defender.dataset.hp = newDefenderHP;
+    
+        // Sağlık çubuklarını güncelle
+        updateHealthBar(attacker, newAttackerHP);
+        updateHealthBar(defender, newDefenderHP);
+    
+        // Saldırı mesajlarını alert ile göster
+        if(attacker && defender){
+           
+            alert(`${attacker.querySelector('h2').textContent}, ${attackPower} hasar verdi! ${attacker.querySelector('h2').textContent} saldırıyor! Savunan Pokemon: ${defender.querySelector('h2').textContent}, kalan HP: ${newDefenderHP}`);
+            alert(`${defender.querySelector('h2').textContent} tarafından ${attacker.querySelector('h2').textContent} saldırısına karşılık verildi! Yeni HP: ${newAttackerHP}`);
+    
+        }
+      
+       
+        // Kazanan ve kaybeden Pokemon'ları kontrol et
+        if (attackerHP <= 0) {
+            alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
+            attacker.remove(); // Saldıran Pokemon'u ekrandan kaldır
+            pokemons.splice(pokemons.indexOf(attacker), 1); // Saldıran Pokemon'u listeden kaldır
+            return;
+        } else if (defenderHP <= 0) {
+            alert(`${defender.querySelector('h2').textContent} artık savunma yapamaz! ${defender.querySelector('h2').textContent}, oyunu kaybetti!`);
+            defender.remove(); // Savunan Pokemon'u ekrandan kaldır
+            pokemons.splice(pokemons.indexOf(defender), 1); // Savunan Pokemon'u listeden kaldır
+            return;
+        }
+    
+        // Sıradaki Pokemon'u belirle
+        [attacker, defender] = [defender, attacker];
+        // Sıradaki Pokemon'un attack fonksiyonunu çağır
+        setTimeout(attack, 1000);
+    
+        // Saldırı yapıldıktan sonra oyunun durumunu kontrol et
+        checkGameStatus();
+    }
+    
+    function selectDefender() {
+        // Savunan Pokemon'u rastgele seçme işlemleri...
+    }
+    
+    
+    let gameEnded=false;// Oyunun bitip bitmediğini belirten bir durum değişkeni
+    
