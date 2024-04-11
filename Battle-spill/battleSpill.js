@@ -51,7 +51,50 @@ async function displayRandomPokemon() {
 }
 
 
-//Trinn:4 Create-delen
+// //Trinn:4 Create-delen
+
+// function createPokemonComponent(pokemonData) {
+//     const pokemonElement = document.createElement('div');
+//     pokemonElement.classList.add('pokemon');
+
+//     const pokemonName = document.createElement('h2');
+//     pokemonName.textContent = pokemonData.name;
+//     pokemonElement.appendChild(pokemonName);
+
+//     const pokemonImage = document.createElement('img');
+//     pokemonImage.src = pokemonData.sprites.front_default;
+//     pokemonImage.alt = pokemonData.name;
+//     pokemonElement.appendChild(pokemonImage);
+
+//     const pokemonStats = document.createElement('ul');
+//     pokemonData.stats.forEach(stat => {
+//         const statItem = document.createElement('li');
+//         statItem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
+//         pokemonStats.appendChild(statItem);
+//     });
+//     pokemonElement.appendChild(pokemonStats);
+//  // Pokemon'un HP değerini belirle
+//  const hp = pokemonData.stats.find(stat => stat.stat.name === "hp").base_stat;
+//  pokemonElement.dataset.hp = hp;
+
+   
+//     // pokemonElement.dataset.hp = 100; // Varsayılan olarak 100 HP
+
+//     // Sağlık çubuğunu oluşturalım ve Pokemon bileşenine ekleyelim
+//     const healthBar = document.createElement('div');
+//     healthBar.classList.add('health-bar');
+//     healthBar.id = `healthBar-${pokemonData.name}`; // Her Pokemon için benzersiz bir id atayalım
+//     healthBar.style.width = '100%'; // Başlangıçta sağlık çubuğunu tam olarak gösterelim
+//     pokemonElement.appendChild(healthBar);
+//      // Eğer Pokemon'un HP'si sıfırsa ekrandan kaldır
+//      if (hp <= 0) {
+//         console.log(`${pokemonData.name} Pokemon'u yenildi.`);
+//         pokemonElement.remove();
+//     }
+//     return pokemonElement;
+// }
+
+let isRemoved = false; // İlk sıfır HP'ye sahip Pokémon'un kaldırıldığını izlemek için bir bayrak
 
 function createPokemonComponent(pokemonData) {
     const pokemonElement = document.createElement('div');
@@ -74,7 +117,6 @@ function createPokemonComponent(pokemonData) {
     });
     pokemonElement.appendChild(pokemonStats);
 
-   
     pokemonElement.dataset.hp = 100; // Varsayılan olarak 100 HP
 
     // Sağlık çubuğunu oluşturalım ve Pokemon bileşenine ekleyelim
@@ -84,11 +126,17 @@ function createPokemonComponent(pokemonData) {
     healthBar.style.width = '100%'; // Başlangıçta sağlık çubuğunu tam olarak gösterelim
     pokemonElement.appendChild(healthBar);
 
+    // Eğer daha önce bir Pokemon kaldırılmamışsa ve bu Pokemon'un HP'si 0 veya daha azsa, ekrandan kaldır
+    if (!isRemoved && parseInt(pokemonElement.dataset.hp) <= 0) {
+        pokemonElement.remove();
+        isRemoved = true;
+    }
+
     return pokemonElement;
 }
 
 
-//Trinn:5 updateeHealthBar function for å oppdatere helsesøyler
+//Trinn:5 updateHealthBar function for å oppdatere helsesøyler
 
 
 const waitingPokemons = document.querySelectorAll('.waiting-pokemon');
@@ -117,11 +165,12 @@ function updateHealthBar(pokemon, hp) {
 // Eğer HP 0 veya daha az ise, Pokemon'u ekrandan kaldır ve kazananı kontrol et
 if (hp <= 0) {
     console.log(`${pokemonName} Pokemon'u yenildi.`);
+    pokemon.remove();
   
-     // Pokemon'un HP'si 0 veya daha azsa, ekrandan kaldır
-     if (parseInt(pokemon.dataset.hp) <= 0) {
-        pokemon.remove();
-    }
+    //  // Pokemon'un HP'si 0 veya daha azsa, ekrandan kaldır
+    //  if (parseInt(pokemon.dataset.hp) <= 0) {
+    //     pokemon.remove();
+    // }
 
     // Eğer bu sonucu etkileyen Pokemon saldıran ise
     if (pokemon === attacker) {
@@ -194,112 +243,85 @@ pokemons.forEach(pokemon => {
     }
     
 
-    //Trinn:7 attack-funksjonen
+    // 
+   
+    
+  
+    
+    
+    
 
-    async function attack() {
-        const attackPower = Math.floor(Math.random() * 50) + 1; // Saldırı gücü (1 ile 50 arasında rastgele)
-    
-        // Saldıran ve savunan Pokemon'ların HP değerlerini güncelle
-        let attackerHP = parseInt(attacker.dataset.hp); // Saldıran Pokemon'un mevcut HP değeri
-        let defenderHP = parseInt(defender.dataset.hp); // Savunan Pokemon'un mevcut HP değeri
-    
-        if (attackerHP <= 0) {
-            alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
-            return;
-        } 
-    
-        const newAttackerHP = Math.max(0, attackerHP - attackPower); // Saldıran Pokemon'un yeni HP değeri
-        const newDefenderHP = Math.max(0, defenderHP - attackPower); // Savunan Pokemon'un yeni HP değeri
-    
-        // HP değerlerini güncelle
-        attacker.dataset.hp = newAttackerHP;
+  
+
+
+async function attack() {
+    const attackPower = Math.floor(Math.random() * 50) + 1; // Saldırı gücü (1 ile 50 arasında rastgele)
+
+    // Saldıran ve savunan Pokemon'ların HP değerlerini güncelle
+    let attackerHP = parseInt(attacker.dataset.hp); // Saldıran Pokemon'un mevcut HP değeri
+    let defenderHP = 0; // Savunan Pokemon'un HP'sini başlangıçta 0 olarak ayarlayın veya başka bir varsayılan değer belirleyin
+
+    if (defender) {
+        defenderHP = parseInt(defender.dataset.hp);
+    }
+
+    if (attackerHP <= 0) {
+        alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
+        return;
+    } 
+
+    const newAttackerHP = Math.max(0, attackerHP - attackPower); // Saldıran Pokemon'un yeni HP değeri
+    const newDefenderHP = Math.max(0, defenderHP - attackPower); // Savunan Pokemon'un yeni HP değeri
+
+    // HP değerlerini güncelle
+    attacker.dataset.hp = newAttackerHP;
+    if (defender) {
         defender.dataset.hp = newDefenderHP;
-    
-        // Sağlık çubuklarını güncelle
-        updateHealthBar(attacker, newAttackerHP);
+    }
+
+    // Sağlık çubuklarını güncelle
+    updateHealthBar(attacker, newAttackerHP);
+    if (defender) {
         updateHealthBar(defender, newDefenderHP);
-    
-        // Saldırı mesajlarını alert ile göster
-        if(attacker && defender){
-           
-            alert(`${attacker.querySelector('h2').textContent}, ${attackPower} hasar verdi! ${attacker.querySelector('h2').textContent} saldırıyor! Savunan Pokemon: ${defender.querySelector('h2').textContent}, kalan HP: ${newDefenderHP}`);
-            alert(`${defender.querySelector('h2').textContent} tarafından ${attacker.querySelector('h2').textContent} saldırısına karşılık verildi! Yeni HP: ${newAttackerHP}`);
-    
-        }
-      
-       
-        // Kazanan ve kaybeden Pokemon'ları kontrol et
-        if (attackerHP <= 0) {
-            alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
-            attacker.remove(); // Saldıran Pokemon'u ekrandan kaldır
-            pokemons.splice(pokemons.indexOf(attacker), 1); // Saldıran Pokemon'u listeden kaldır
-            return;
-        } else if (defenderHP <= 0) {
-            alert(`${defender.querySelector('h2').textContent} artık savunma yapamaz! ${defender.querySelector('h2').textContent}, oyunu kaybetti!`);
-            defender.remove(); // Savunan Pokemon'u ekrandan kaldır
-            pokemons.splice(pokemons.indexOf(defender), 1); // Savunan Pokemon'u listeden kaldır
-            return;
-        }
-    
-        // Sıradaki Pokemon'u belirle
-        [attacker, defender] = [defender, attacker];
-        // Sıradaki Pokemon'un attack fonksiyonunu çağır
-        setTimeout(attack, 1000);
-    
-        // Saldırı yapıldıktan sonra oyunun durumunu kontrol et
-        checkGameStatus();
     }
-    
-    function selectDefender() {
-        // Savunan Pokemon'u rastgele seçme işlemleri...
-    }
-    
-    
-    
-    
 
-    //Trinn:8 checkGameStatus-funksjonen
+    // Saldırının sonlanmasını sağlayan bir sonraki adımı başlat
+    // Bu kod mevcut haliyle devam edebilir
 
-let gameEnded=false;// Oyunun bitip bitmediğini belirten bir durum değişkeni
+    // Saldırı yapıldıktan sonra oyunun durumunu kontrol et
+    checkGameStatus();
+}
 
 function checkGameStatus() {
-    if (gameEnded) return; // Oyun zaten sona erdiyse fonksiyonu sonlandır
-
+    if (gameEnded) return;
 
     const remainingPokemons = document.querySelectorAll('.pokemon');
     const remainingPokemonsArray = Array.from(remainingPokemons);
-    
     let activePlayers = remainingPokemonsArray.filter(pokemon => !pokemon.classList.contains('waiting-pokemon'));
 
-    // Sadece saldıran ve savunan oyuncuların HP'sini kontrol et
-    let attackerHP = parseInt(attacker.dataset.hp);
-    let defenderHP = parseInt(defender.dataset.hp);
-
-    // Her iki oyuncunun HP'si de 0 ise, oyunu kaybeden oyuncuyu belirle ve ekrandan kaldır
-    if (attackerHP <= 0 && defenderHP <= 0) {
-        let loser = null;
-        if (attackerHP <= 0) {
-            loser = attacker;
-        } else {
-            loser = defender;
-        }
-        loser.dataset.hp = 0; // Oyunu kaybeden Pokemon'un HP'sini 0 olarak güncelle
-        updateHealthBar(loser, 0); // Sağlık çubuğunu güncelle (HP 0 olduğu için)
-        loser.remove(); // Oyunu kaybeden Pokemon'u ekrandan kaldır
+    if (activePlayers.length === 1) {
+        const winner = activePlayers[0];
+        winner.dataset.hp = 100; // Kazanan Pokemon'un HP'sini yeniden doldurmaya gerek yok
+        alert(`Tebrikler! ${winner.querySelector('h2').textContent}, 1. oyunu kazandınız. 2. oyuna devam edebilirsiniz.`);
+        startSecondStage();
         gameEnded = true; // Oyunun bittiğini belirt
         return;
     }
 
-   // Oyunda sadece bir Pokemon kaldıysa ve bekleyen bir oyuncu değilse, kazanan ilan edilir ve ikinci aşamaya geçilir
-if (activePlayers.length === 1) {
-    const winner = activePlayers[0];
-    winner.dataset.hp = 100; // Kazanan Pokemon'un HP'sini yeniden doldurmaya gerek yok
-    alert(`Tebrikler! ${winner.querySelector('h2').textContent}, 1. oyunu kazandınız. 2. oyuna devam edebilirsiniz.`);
-    startSecondStage();
-    gameEnded = true; // Oyunun bittiğini belirt
+    activePlayers.forEach(pokemon => {
+        const hp = parseInt(pokemon.dataset.hp);
+        if (pokemon && hp <= 0) {
+            pokemon.remove(); // Eğer Pokemon'un HP'si 0 veya daha azsa, ekrandan kaldır
+        }
+    });
 }
 
+function selectDefender() {
+    // Savunan Pokemon'u rastgele seçme işlemleri...
 }
+
+
+
 function startSecondStage() {
     gameEnded = false; // İkinci aşama başladığında gameEnded'i sıfırla
     // İkinci aşamanın başka işlemleri...
