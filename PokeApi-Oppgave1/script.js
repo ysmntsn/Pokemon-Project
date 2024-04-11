@@ -99,8 +99,11 @@ const createBoxPokemon = (pokemon)=>{
 
 
        const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-    const id = pokemon.id < 10 ? `00${pokemon.id}` : `0${pokemon.id}`;
-    //    const type = pokemon.types[0].type.name;
+   
+    //    const id = pokemon.id < 10 ? `00${pokemon.id}` : `0${pokemon.id}`;
+    const id = pokemon.id < 10 ? `00${pokemon.id}` : pokemon.id < 100 ? `0${pokemon.id}` : pokemon.id;
+   
+       //    const type = pokemon.types[0].type.name;
     const pokemonTypes = pokemon.types.map(type => type.type.name); // Pokemon'un tüm türlerini al
     const validTypes = pokemonTypes.filter(type => Object.keys(colors).includes(type)); // Geçerli türleri kontrol et
     const type = validTypes.length > 0 ? validTypes[0] : "normal"; 
@@ -212,6 +215,8 @@ function showSavedPokemons() {
     });
 }
 
+
+
 function createPokemonElement(pokemon) {
     const id = pokemon.id < 10 ? `00${pokemon.id}` : `0${pokemon.id}`;
     const pokemonElement = document.createElement('div');
@@ -270,15 +275,6 @@ buttonsHeader.forEach(button => button.addEventListener("click", async (event) =
         console.error('There has been a problem with your fetch operation:', error);
     }
 }));
-// document.getElementById("update").addEventListener("click", async function() {
-//     containerPokeSaved.innerHTML = ""; // Mevcut kartları temizle
-
-//     try {
-//         showSavedPokemons(); // Kaydedilmiş Pokemon kartlarını yeniden göster
-//     } catch (error) {
-//         console.error('Hata:', error.message);
-//     }
-// });
 
 function editPoke(id) {
     console.log("fonksiyon çağrıldı", id);
@@ -322,4 +318,3 @@ const card = document.querySelector(`[data-id="${id.toString().padStart(3, "0")}
         }
     }
 }
-
