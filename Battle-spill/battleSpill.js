@@ -138,3 +138,58 @@ if (hp <= 0) {
 }
 
 }
+
+
+
+//Trinn:5 startBattle
+
+
+let pokemons = [];
+let attacker = null; // Saldıran Pokemon
+let defender = null; // Savunan Pokemon
+
+function startBattle() {
+    const pokemonContainer = document.getElementById('pokemonContainer');
+     pokemons = Array.from(pokemonContainer.querySelectorAll('.pokemon'));
+
+  // Kullanıcıya Pokemon seçmesi için event listener'ı başlat
+     document.getElementById('startGameButton').addEventListener('click', function() {
+        alert("Oyun başladı! Lütfen bir Pokemon seçin.");
+        pokemons.forEach(pokemon => {
+            pokemon.addEventListener('click', function() {
+                if (attacker === null) {
+                    attacker = this;
+                    alert(`Saldıran Pokemon: ${attacker.querySelector('h2').textContent}`);
+                    // Savunan Pokemon'u rastgele seç
+                    selectRandomDefender();
+                }
+            });
+        });
+    });
+    // Pokemon seçimi için başka bir olay dinleyicisi ekleyin
+pokemons.forEach(pokemon => {
+    pokemon.addEventListener('click', function() {
+        if (attacker === null) {
+            attacker = this;
+            alert(`Saldıran Pokemon: ${attacker.querySelector('h2').textContent}`);
+            // Savunan Pokemon'u rastgele seç
+            selectRandomDefender();
+        }
+    });
+});
+
+   
+     }
+
+
+    // Rastgele bir savunan Pokemon'u seçme fonksiyonu
+    function selectRandomDefender() {
+        const remainingPokemons = pokemons.filter(pokemon => pokemon !== attacker);
+        defender = remainingPokemons[Math.floor(Math.random() * remainingPokemons.length)];
+        alert(`Savunan Pokemon: ${defender.querySelector('h2').textContent}`);
+        // Saldırıyı başlat
+        attack();
+   
+    
+    }
+    
