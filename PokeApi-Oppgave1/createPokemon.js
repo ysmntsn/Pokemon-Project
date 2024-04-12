@@ -1,73 +1,32 @@
+// const defaultImageUrl ="https://static.posters.cz/image/750webp/71936.webp";
 
-
-
-// //Yeni Pokemon oluşturma işlemini gerçekleştiren fonksiyon
-
-// const defaultImageUrl = 'https://www.evrensel.net/images/840/upload/dosya/57053.jpg';
-
-
+// // Yeni Pokemon oluşturma işlemini gerçekleştiren fonksiyon
 // function createNewPokemon() {
 //     // Formdan gelen bilgileri al
 //     const pokemonName = document.getElementById('pokemonName').value;
 //     const pokemonType = document.getElementById('pokemonType').value;
 
 //     // Yeni Pokemon objesi oluştur
-//     const newPokemon = {
+//     const pokemon = {
 //         name: pokemonName,
 //         type: pokemonType,
-//         // id ve url özellikleri artık kullanılmıyor
 //     };
+    
+//     // Yeni Pokemon kartını oluştur
+//     const newPokemonCard = document.createElement('div');
+//     newPokemonCard.classList.add('pokemon-card');
+//     newPokemonCard.classList.add(pokemon.type.toLowerCase());
+    
+    
+    
+    
+//     // Yeni Pokemon kartını 3. sayfadaki div içine ekle
+//     const containerPokeSaved = document.getElementById('containerPokeSaved');
+//     containerPokeSaved.innerHTML = ''; // Önceki kartları temizle
+//     containerPokeSaved.appendChild(newPokemonCard);
 
-//     // Yeni Pokemon kartını ekrana ekle
-//     addNewPokemonCard(newPokemon);
-
-//     // Yeni Pokemon'i localStorage'e kaydet
-//     savePokemon(newPokemon);
-// }
-
-
-
-
-// function addNewPokemonCard(pokemon) {
-//     // Kart elementini oluştur
-//     const card = document.createElement('div');
-//     card.classList.add("pokemonForm");
-//     card.classList.add(pokemon.type.toLowerCase()); // Kartın arkaplan rengini ayarla
-
-//     // Kart içeriğini oluştur
-//     const imgElement = document.createElement('img');
-//     imgElement.src = defaultImageUrl; // Default resim URL'si
-//     imgElement.alt = `${pokemon.name} image`;
-
-//     const nameElement = document.createElement('h4');
-//     nameElement.textContent = pokemon.name;
-
-//     const typeElement = document.createElement('p');
-//     typeElement.textContent = pokemon.type;
-
-//     // Kart içeriğini kart elementine ekle
-//     card.appendChild(imgElement);
-//     card.appendChild(nameElement);
-//     card.appendChild(typeElement);
-
-//     // Kartı sayfaya ekle
-//     const container = document.getElementById('containerPokeSaved');
-//     container.innerHTML = ''; 
-//     container.appendChild(card);
-// }
-
-
-
-// // Yeni Pokemon'i localStorage'e kaydeden fonksiyon
-// function savePokemon(pokemon) {
-//     // Mevcut Pokemon listesini al
-//     let savedPokemon = JSON.parse(localStorage.getItem('savedPokemon')) || [];
-
-//     // Yeni Pokemon'i listeye ekle
-//     savedPokemon.push(pokemon);
-
-//     // Güncellenmiş Pokemon listesini localStorage'e kaydet
-//     localStorage.setItem('savedPokemon', JSON.stringify(savedPokemon));
+//     // Yeni Pokemon'i ilk sayfadaki 51. karta ekle
+//     addNewPokemonImage(pokemon);
 // }
 
 // // Form gönderildiğinde tetiklenecek olay
@@ -82,60 +41,79 @@
 //     });
 // }
 
+// // İlk sayfadaki resim listesine yeni Pokemon kartını ekleyen fonksiyon
+// function addNewPokemonImage(pokemon) {
+//     // Yeni Pokemon resmini oluştur
+//     const newPokemonImage = document.createElement('img');
+//     newPokemonImage.src = defaultImageUrl; // veya kullanıcı tarafından sağlanan bir URL
+//     newPokemonImage.alt = pokemon.name; // Resmin alternatif metni olarak Pokemon ismini kullanabiliriz
+    
+//     // İlk sayfadaki resim listesine yeni Pokemon resmini 51. karta ekle
+//     const imageList = document.getElementById('imageList');
+//     const fiftyFirstImage = imageList.children[50]; // 51. kartın indeksi 50'dir
+//     imageList.insertBefore(newPokemonImage, fiftyFirstImage.nextSibling);
+// }
 
-// // Kartı sayfaya ekle
-// const container = document.getElementById('containerPokeSaved');
-// container.insertBefore(card, container.firstChild);
 
-//Yeni Pokemon oluşturma işlemini gerçekleştiren fonksiyon
-const defaultImageUrl = 'https://www.evrensel.net/images/840/upload/dosya/57053.jpg';
+const defaultImageUrl = "https://static.posters.cz/image/750webp/71936.webp";
 
+// Yeni Pokemon oluşturma işlemini gerçekleştiren fonksiyon
 function createNewPokemon() {
     // Formdan gelen bilgileri al
     const pokemonName = document.getElementById('pokemonName').value;
     const pokemonType = document.getElementById('pokemonType').value;
 
     // Yeni Pokemon objesi oluştur
-    const newPokemon = {
+    const pokemon = {
         name: pokemonName,
         type: pokemonType,
-        // id ve url özellikleri artık kullanılmıyor
     };
+    
+    // Yeni Pokemon kartını oluştur
+    const newPokemonCard = document.createElement('div');
+    newPokemonCard.classList.add('pokemon-card');
+    newPokemonCard.classList.add(pokemon.type.toLowerCase());
+    
+    // Yeni Pokemon kartını 3. sayfadaki div içine ekle
+    const containerPokeSaved = document.getElementById('containerPokeSaved');
+    if (containerPokeSaved) {
+        containerPokeSaved.innerHTML = ''; // Önceki kartları temizle
+        containerPokeSaved.appendChild(newPokemonCard);
+    } else {
+        console.error("Element with id 'containerPokeSaved' not found!");
+    }
 
-    // Yeni Pokemon kartını ekrana ekle
-    addNewPokemonCard(newPokemon);
-
-    // Yeni Pokemon'i localStorage'e kaydet
-    savePokemon(newPokemon);
+    // Yeni Pokemon'i ilk sayfadaki 51. karta ekle
+    addNewPokemonImage(pokemon);
 }
 
-function addNewPokemonCard(pokemon) {
-    // Kart elementini oluştur
-    const card = document.createElement('div');
-    card.classList.add("pokemonForm");
-    card.classList.add(pokemon.type.toLowerCase()); // Kartın arkaplan rengini ayarla
+// Form gönderildiğinde tetiklenecek olay
+const form = document.getElementById('pokemonForm');
 
-    // Kart içeriğini oluştur
-    const imgElement = document.createElement('img');
-    imgElement.src = defaultImageUrl; // Default resim URL'si
-    imgElement.alt = `${pokemon.name} image`;
-
-    const nameElement = document.createElement('h4');
-    nameElement.textContent = pokemon.name;
-
-    const typeElement = document.createElement('p');
-    typeElement.textContent = pokemon.type;
-
-    // Kart içeriğini kart elementine ekle
-    card.appendChild(imgElement);
-    card.appendChild(nameElement);
-    card.appendChild(typeElement);
-
-    // Kartı sayfaya ekle
-    const container = document.getElementById('containerPokeSaved');
-    container.innerHTML = ''; 
-    container.appendChild(card);
+if (!form) {
+    console.error("Form with id 'pokemonForm' not found!");
+} else {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Sayfanın yeniden yüklenmesini engeller
+        createNewPokemon(); // Yeni Pokemon oluşturma işlemini gerçekleştir
+    });
 }
 
+// İlk sayfadaki resim listesine yeni Pokemon kartını ekleyen fonksiyon
+function addNewPokemonImage(pokemon) {
+    // Yeni Pokemon resmini oluştur
+    const newPokemonImage = document.createElement('img');
+    newPokemonImage.src = defaultImageUrl; // veya kullanıcı tarafından sağlanan bir URL
+    newPokemonImage.alt = pokemon.name; // Resmin alternatif metni olarak Pokemon ismini kullanabiliriz
+    
+    // İlk sayfadaki resim listesine yeni Pokemon resmini 51. karta ekle
+    const imageList = document.getElementById('imageList');
+    if (imageList && imageList.children.length >= 51) {
+        const fiftyFirstImage = imageList.children[50]; // 51. kartın indeksi 50'dir
+        imageList.insertBefore(newPokemonImage, fiftyFirstImage.nextSibling);
+    } else {
+        console.error("Element with id 'imageList' not found or does not have at least 51 children!");
+    }
+}
 
 
