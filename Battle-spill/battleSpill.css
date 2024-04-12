@@ -21,7 +21,7 @@ h1 {
 }
 
 .pokemon {
-    margin: 0 10px 50px; /* Sağa ve sola 10px, alt kısmına 20px boşluk */
+    margin: 0 10px 50px; 
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -34,13 +34,13 @@ h1 {
     max-height: 100px;
 }
 .pokemon h2 {
-    font-size: 18px; /* veya istediğiniz bir boyut */
-    color: #000; /* veya istediğiniz bir renk */
+    font-size: 18px; 
+    color: #000; 
 }
 
 button {
     margin-top: 20px;
-    margin-bottom: 20px; /* Yukarıdaki ve alttaki boşluk 20px */
+    margin-bottom: 20px; 
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
