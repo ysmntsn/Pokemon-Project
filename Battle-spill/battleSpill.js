@@ -130,7 +130,7 @@ function updateHealthBar(pokemon, hp) {
 
 
 if (hp <= 0) {
-    console.log(`${pokemonName} Pokemon'u yenildi.`);
+    console.log(`${pokemonName} tapte.`);
   
      if (parseInt(pokemon.dataset.hp) <= 0) {
         pokemon.remove();
@@ -138,13 +138,13 @@ if (hp <= 0) {
 
   
     if (pokemon === attacker) {
-        console.log(`${attacker.querySelector('h2').textContent} Pokemon'u oyunu kaybetti!`);
-        alert(`${attacker.querySelector('h2').textContent} Pokemon'u oyunu kaybetti!`);
+        console.log(`${attacker.querySelector('h2').textContent} Pokemon tapte spillet!`);
+        alert(`${attacker.querySelector('h2').textContent} Pokemon tapte spillet`);
      
         attacker = null;
     } else {
-        console.log(`${defender.querySelector('h2').textContent} Pokemon'u oyunu kazandı! Tebrikler, kazandınız!`);
-        alert(`${defender.querySelector('h2').textContent} Pokemon'u ikinci oyuna hazır! Tebrikler, kazandınız!`);
+        console.log(`${defender.querySelector('h2').textContent} Pokemon vant spillet! Gratulerer du vant!`);
+        alert(`${defender.querySelector('h2').textContent} Pokemon klar for 2.spill! Gratulerer du vant!`);
         
     }
 }
@@ -168,12 +168,12 @@ function startBattle() {
 
  
      document.getElementById('startGameButton').addEventListener('click', function() {
-        alert("Oyun başladı! Lütfen bir Pokemon seçin.");
+        alert("Spillet har startet! Velg en Pokémon");
         pokemons.forEach(pokemon => {
             pokemon.addEventListener('click', function() {
                 if (attacker === null) {
                     attacker = this;
-                    alert(`Saldıran Pokemon: ${attacker.querySelector('h2').textContent}`);
+                    alert(`Attacker Pokemon: ${attacker.querySelector('h2').textContent}`);
                    
                     selectRandomDefender();
                 }
@@ -185,7 +185,7 @@ pokemons.forEach(pokemon => {
     pokemon.addEventListener('click', function() {
         if (attacker === null) {
             attacker = this;
-            alert(`Saldıran Pokemon: ${attacker.querySelector('h2').textContent}`);
+            alert(`Attacker Pokemon: ${attacker.querySelector('h2').textContent}`);
            
             selectRandomDefender();
         }
@@ -200,7 +200,7 @@ pokemons.forEach(pokemon => {
     function selectRandomDefender() {
         const remainingPokemons = pokemons.filter(pokemon => pokemon !== attacker);
         defender = remainingPokemons[Math.floor(Math.random() * remainingPokemons.length)];
-        alert(`Savunan Pokemon: ${defender.querySelector('h2').textContent}`);
+        alert(`Defender Pokemon: ${defender.querySelector('h2').textContent}`);
       
         attack();
    
@@ -219,7 +219,7 @@ pokemons.forEach(pokemon => {
     let defenderHP = parseInt(defender.dataset.hp); 
 
     if (attackerHP <= 0) {
-        alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
+        alert(`${attacker.querySelector('h2').textContent} ikke lenger kan angripe! ${attacker.querySelector('h2').textContent}, spillet tapt!`);
         return;
     } 
 
@@ -237,20 +237,20 @@ pokemons.forEach(pokemon => {
 
     if(attacker && defender){
        
-        alert(`${attacker.querySelector('h2').textContent}, ${attackPower} hasar verdi! ${attacker.querySelector('h2').textContent} saldırıyor! Savunan Pokemon: ${defender.querySelector('h2').textContent}, kalan HP: ${newDefenderHP}`);
-        alert(`${defender.querySelector('h2').textContent} tarafından ${attacker.querySelector('h2').textContent} saldırısına karşılık verildi! Yeni HP: ${newAttackerHP}`);
+        alert(`${attacker.querySelector('h2').textContent}, ${attackPower} gir skade! ${attacker.querySelector('h2').textContent} angriper! Defender Pokemon: ${defender.querySelector('h2').textContent}, rest HP: ${newDefenderHP}`);
+        alert(`${defender.querySelector('h2').textContent} av ${attacker.querySelector('h2').textContent} angrep ble reagert på! Ny HP: ${newAttackerHP}`);
 
     }
   
    
 
     if (attackerHP <= 0) {
-        alert(`${attacker.querySelector('h2').textContent} artık saldırı yapamaz! ${attacker.querySelector('h2').textContent}, oyunu kaybetti!`);
+        alert(`${attacker.querySelector('h2').textContent} kan ikke angripe! ${attacker.querySelector('h2').textContent}, tapte spillet!`);
         attacker.remove(); 
         pokemons.splice(pokemons.indexOf(attacker), 1); 
         return;
     } else if (defenderHP <= 0) {
-        alert(`${defender.querySelector('h2').textContent} artık savunma yapamaz! ${defender.querySelector('h2').textContent}, oyunu kaybetti!`);
+        alert(`${defender.querySelector('h2').textContent} ikke lenger kan forsvare! ${defender.querySelector('h2').textContent}, tapte spillet!`);
         defender.remove(); 
         pokemons.splice(pokemons.indexOf(defender), 1); 
         return;
@@ -308,7 +308,7 @@ function checkGameStatus() {
 if (activePlayers.length === 1) {
     const winner = activePlayers[0];
     winner.dataset.hp = 100; 
-    alert(`Tebrikler! ${winner.querySelector('h2').textContent}, 1. oyunu kazandınız. 2. oyuna devam edebilirsiniz.`);
+    alert(`Gratulerer! ${winner.querySelector('h2').textContent}, Du vant kamp 1. Du kan fortsette med spill 2.`);
     startSecondStage();
     gameEnded = true; 
 }
@@ -317,7 +317,7 @@ if (activePlayers.length === 1) {
 function startSecondStage() {
     gameEnded = false; 
   
-    alert("İkinci aşama başladı! 2. oyuna hazır mısınız?");
+    alert("Den andre fasen har startet! Er du klar for den andre kampen?");
 }
 
 
@@ -329,7 +329,7 @@ window.onload = function() {
 
    
     document.getElementById('startGameButton').addEventListener('click', function() {
-        alert("Oyun başladı! Saldırı için bir Pokemon seçin.");
+        alert("Spillet har startet! Velg en Pokémon å angripe.");
         startBattle();
     });
 
