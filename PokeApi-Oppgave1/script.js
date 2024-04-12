@@ -1,4 +1,4 @@
-//Variables//
+
 
 const searchInput = document.querySelector("#input-poke");
 const searchBtn = document.querySelector(".btn-search");
