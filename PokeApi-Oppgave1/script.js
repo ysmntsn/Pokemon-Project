@@ -134,7 +134,7 @@ const createBoxPokemon = (pokemon)=>{
 
  
     containerPoke.appendChild(pokemonElement);
-    console.log("Pokemon elementi oluşturuldu:", pokemonElement);
+    console.log("Pokemon-element opprettet:", pokemonElement);
 
     
    
@@ -169,13 +169,13 @@ const savePokemon = (name, id, type,imageUrl) => {
     
     const isDuplicate = savedPokemons.some(pokemon => pokemon.id === id);
     if (isDuplicate) {
-        alert("Bu Pokemon zaten kayıtlı!");
+        alert("Denne Pokémonen er allerede registrert!");
         return;
     }
 
    
     if (savedPokemons.length >= 5) {
-        alert("En fazla 5 Pokemon kaydedebilirsiniz!");
+        alert("Du kan lagre opptil 5 Pokemon!");
         return;
     }
 
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function showSavedPokemons() {
     const container = document.querySelector('.container-saved-pokemon');
     if (!container) {
-        console.error('Hata: Container elementi bulunamadı!');
+        console.error('Feil: Container ble ikke funnet!');
         return;
     }
     container.innerHTML = ''; 
@@ -202,7 +202,7 @@ function showSavedPokemons() {
     const savedPokemons = JSON.parse(localStorage.getItem('savedPokemons')) || [];
 
     if (savedPokemons.length === 0) {
-        container.innerHTML = '<p>Kaydedilmiş Pokemon bulunmamaktadır.</p>';
+        container.innerHTML = '<p>Det er ingen Pokémon registrert.</p>';
         return;
     }
 
@@ -280,8 +280,8 @@ function editPoke(id) {
     console.log("fonksiyon çağrıldı", id);
     
    
-    const newName = prompt("Lütfen yeni ismi giriniz:");
-    const newType = prompt("Lütfen yeni türü giriniz:");
+    const newName = prompt("Vennligst skriv inn det nye navnet:");
+    const newType = prompt("Vennligst skriv inn det nye navnet:");
 
     
     if (newName !== null && newType !== null) {
@@ -311,10 +311,10 @@ const card = document.querySelector(`[data-id="${id.toString().padStart(3, "0")}
             localStorage.setItem('savedPokemons', JSON.stringify(savedPokemons));
 
             
-            alert('Pokemon bilgileri başarıyla güncellendi!');
+            alert('Pokémon-informasjon ble oppdatert!');
         } else {
             
-            alert('Belirtilen Pokemon bulunamadı!');
+            alert('Den angitte Pokémon ble ikke funnet!!');
         }
     }
 }
